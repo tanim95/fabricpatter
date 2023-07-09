@@ -1,0 +1,393 @@
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <title>Fabric Pattern Generator</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f3f3f3;
+      }
+
+      h1 {
+        font-size: 40px;
+        color: #333333;
+        text-align: center;
+      }
+
+      h2 {
+        font-size: 30px;
+        color: #555555;
+        text-align: center;
+      }
+      h3 {
+        font-size: 30px;
+        color: #555555;
+        text-align: center;
+      }
+
+      form {
+        width: 70%;
+        max-width: 600px;
+        background-color: #ffffff;
+        margin-left: 6rem;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        display: inline-block;
+        margin-bottom: 10px;
+        color: #666666;
+      }
+
+      input[type='number'],
+      input[type='text'] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      input[type='submit'] {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      input[type='submit']:hover {
+        background-color: #0069d9;
+      }
+
+      .container {
+        margin-top: 20px;
+      }
+
+      .header {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Chittagong Textile Engineering College</h1>
+        <h2>Department: Fabric Engineering</h2>
+        <h3>Batch: 12th</h3>
+      </div>
+      <div class="form">
+        <h1>Fabric Pattern Generator</h1>
+        <form action="/generate" method="post">
+          <label for="epi">EPI (Ends per Inch):</label>
+          <input type="number" id="epi" name="epi" required />
+          <br />
+          <label for="ppi">PPI (Picks per Inch):</label>
+          <input type="number" id="ppi" name="ppi" required />
+          <br />
+          <label for="weaving_pattern"
+            >Weaving Pattern (0 = non-weave, 1 = weave):</label
+          >
+          <input
+            type="text"
+            id="weaving_pattern"
+            name="weaving_pattern"
+            required
+          />
+          <label for="yarn_count">Yarn Count:</label>
+          <input type="number" id="yarn_count" name="yarn_count" required />
+          <br />
+          <input type="submit" value="Generate Fabric Pattern" />
+        </form>
+      </div>
+    </div>
+  </body>
+</html> -->
+
+<!-- ///////////////////////////////////////////////////////////////////////////////// -->
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <title>Fabric Pattern Generator</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+        background-color: #e8f4f8;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      h1 {
+        font-size: 40px;
+        color: #333333;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      h2 {
+        font-size: 30px;
+        color: #555555;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      h3 {
+        font-size: 24px;
+        color: #555555;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      form {
+        width: 70%;
+        max-width: 600px;
+        background-color: #ffffff;
+        margin-left: 8rem;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        display: inline-block;
+        margin-bottom: 10px;
+        color: #666666;
+        font-weight: bold;
+      }
+
+      input[type='number'],
+      input[type='text'] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 15px;
+        font-size: 16px;
+      }
+
+      input[type='submit'] {
+        width: 100%;
+        padding: 10px;
+        background-color: #4ca369;
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      input[type='submit']:hover {
+        background-color: #3b8e57;
+      }
+
+      .container {
+        margin-top: 20px;
+      }
+
+      .footer {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        font-size: 14px;
+      }
+
+      .footer div {
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Chittagong Textile Engineering College</h1>
+      <h2>Department: Fabric Engineering</h2>
+      <h3>Batch: 12th</h3>
+      <form action="/generate" method="post">
+        <label for="epi">EPI (Ends per Inch):</label>
+        <input type="number" id="epi" name="epi" required />
+        <br />
+        <label for="ppi">PPI (Picks per Inch):</label>
+        <input type="number" id="ppi" name="ppi" required />
+        <br />
+        <label for="weaving_pattern"
+          >Weaving Pattern (0 = non-weave, 1 = weave):</label
+        >
+        <input
+          type="text"
+          id="weaving_pattern"
+          name="weaving_pattern"
+          required
+        />
+        <label for="yarn_count">Yarn Count:</label>
+        <input type="number" id="yarn_count" name="yarn_count" required />
+        <br />
+        <input type="submit" value="Generate Fabric Pattern" />
+      </form>
+    </div>
+    <div class="footer">
+      <div>Md. Anisur Rahman</div>
+      <div>Md. Tohidul Islam Maruf</div>
+      <div>Rubab Z Naser</div>
+      <div>Joyota Chakma</div>
+      <div>Mir Mohiuddin Minhaj</div>
+      <div>Nayeemul Arafin</div>
+    </div>
+  </body>
+</html> -->
+
+<!-- .......................................................... -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fabric Pattern Generator</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+        background-color: #e8f4f8;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      h1 {
+        font-size: 40px;
+        color: #333333;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      h2 {
+        font-size: 30px;
+        color: #555555;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      h3 {
+        font-size: 24px;
+        color: #555555;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      form {
+        width: 70%;
+        max-width: 600px;
+        background-color: #ffffff;
+        margin-left: 8rem;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        display: inline-block;
+        margin-bottom: 10px;
+        color: #666666;
+        font-weight: bold;
+      }
+
+      input[type='number'],
+      input[type='text'] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 15px;
+        font-size: 16px;
+      }
+
+      input[type='submit'] {
+        width: 100%;
+        padding: 10px;
+        background-color: #4ca369;
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      input[type='submit']:hover {
+        background-color: #3b8e57;
+      }
+
+      .container {
+        margin-top: 20px;
+      }
+
+      .footer {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        font-size: 14px;
+      }
+
+      .footer div {
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Chittagong Textile Engineering College</h1>
+      <h2>Department: Fabric Engineering</h2>
+      <h3>Batch: 12th</h3>
+      <form action="/generate" method="post">
+        <label for="epi">EPI (Ends per Inch):</label>
+        <input type="number" id="epi" name="epi" required />
+        <br />
+        <label for="epi_color">EPI Color:</label>
+        <input type="color" id="epi_color" name="epi_color" required />
+        <br />
+        <label for="ppi">PPI (Picks per Inch):</label>
+        <input type="number" id="ppi" name="ppi" required />
+        <br />
+        <label for="ppi_color">PPI Color:</label>
+        <input type="color" id="ppi_color" name="ppi_color" required />
+        <br />
+        <label for="weaving_pattern"
+          >Weaving Pattern (0 = non-weave, 1 = weave):</label
+        >
+        <input
+          type="text"
+          id="weaving_pattern"
+          name="weaving_pattern"
+          required
+        />
+        <!-- <label for="yarn_count">Yarn Count:</label>
+        <input type="number" id="yarn_count" name="yarn_count" required /> -->
+        <br />
+        <input type="submit" value="Generate Fabric Pattern" />
+      </form>
+    </div>
+    <div class="footer">
+      <div>Md. Anisur Rahman</div>
+      <div>Md. Tohidul Islam Maruf</div>
+      <div>Rubab Z Naser</div>
+      <div>Joyota Chakma</div>
+      <div>Mir Mohiuddin Minhaj</div>
+      <div>Nayeemul Arafin</div>
+    </div>
+  </body>
+</html>
