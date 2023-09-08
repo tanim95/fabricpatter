@@ -132,6 +132,11 @@ def generate():
     epi_color = hex_to_rgb(request.form['epi_color'])
     ppi_color = hex_to_rgb(request.form['ppi_color'])
 
+    # Check if epi or ppi exceeds the limit (40)
+    if epi > 40 or ppi > 40:
+        error = "EPI and PPI should not exceed 40."
+        return render_template('index.html', error=error)
+
     #  screen resolution
     screen_width, screen_height = 800, 600
     image, error = generate_fabric_image(
