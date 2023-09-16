@@ -14,7 +14,7 @@ def hex_to_rgb(hex_color):
 
 
 def generate_fabric_image(screen_width, screen_height, weaving_pattern, epi, ppi, epi_color, ppi_color):
-    square_size = 8
+    square_size = 10
 
     fabric_width = screen_width // square_size
     fabric_height = screen_height // square_size
