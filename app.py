@@ -14,7 +14,8 @@ def hex_to_rgb(hex_color):
 
 
 def generate_fabric_image(screen_width, screen_height, weaving_pattern, epi, ppi, epi_color, ppi_color):
-    square_size = 10
+    # Adjust the square size to ensure even division
+    square_size = min(screen_width, screen_height) // max(epi, ppi)
 
     fabric_width = screen_width // square_size
     fabric_height = screen_height // square_size
@@ -23,15 +24,15 @@ def generate_fabric_image(screen_width, screen_height, weaving_pattern, epi, ppi
 
     for i in range(fabric_width):  # column position
         for j in range(fabric_height):  # row position
-            # cheacking if its weave or non-weave
-            if weaving_pattern[(i * epi // square_size) % len(weaving_pattern)] == '1':
-                # cheaking if square is at even position
-                if (i * ppi // square_size) % 2 == 0 and (j * ppi // square_size) % 2 == 0:
-                    fabric_image[j, i] = epi_color
-                else:
-                    fabric_image[j, i] = ppi_color
+            # Calculate the pattern index based on the position
+            pattern_index = (i * epi // square_size + j * ppi //
+                             square_size) % len(weaving_pattern)
+
+            # Check the weaving pattern
+            if weaving_pattern[pattern_index] == '1':
+                fabric_image[j, i] = epi_color
             else:
-                fabric_image[j, i] = [0, 0, 0]  # Non weave color
+                fabric_image[j, i] = ppi_color
 
     thickened_fabric_image = np.kron(fabric_image, np.ones(
         (square_size, square_size, 1), dtype=np.uint8))
