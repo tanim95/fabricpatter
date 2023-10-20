@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, request, send_file
 import numpy as np
 from PIL import Image
@@ -13,34 +14,6 @@ def hex_to_rgb(hex_color):
     return [r, g, b]
 
 
-def generate_fabric_image(screen_width, screen_height, weaving_pattern, epi, ppi, epi_color, ppi_color):
-    # Adjust the square size to ensure even division
-    square_size = min(screen_width, screen_height) // max(epi, ppi)
-
-    fabric_width = screen_width // square_size
-    fabric_height = screen_height // square_size
-
-    fabric_image = np.zeros((fabric_height, fabric_width, 3), dtype=np.uint8)
-
-    for i in range(fabric_width):  # column position
-        for j in range(fabric_height):  # row position
-            # Calculate the pattern index based on the position
-            pattern_index = (i * epi // square_size + j * ppi //
-                             square_size) % len(weaving_pattern)
-
-            # Check the weaving pattern
-            if weaving_pattern[pattern_index] == '1':
-                fabric_image[j, i] = epi_color
-            else:
-                fabric_image[j, i] = ppi_color
-
-    thickened_fabric_image = np.kron(fabric_image, np.ones(
-        (square_size, square_size, 1), dtype=np.uint8))
-
-    image = Image.fromarray(thickened_fabric_image)
-    return image, None
-
-
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -49,28 +22,53 @@ def home():
 @app.route('/generate', methods=['POST'])
 def generate():
     weaving_pattern = request.form['weaving_pattern']
+
+    if len(weaving_pattern) > 15:
+        error = "Warp pattern should be up to 12 characters long."
+        return render_template('index.html', error=error)
+
     epi = int(request.form['epi'])
     ppi = int(request.form['ppi'])
     epi_color = hex_to_rgb(request.form['epi_color'])
     ppi_color = hex_to_rgb(request.form['ppi_color'])
 
-    # if epi or ppi exceeds the limit (40)
     if epi > 40 or ppi > 40:
         error = "EPI and PPI should not exceed 40."
         return render_template('index.html', error=error)
 
-    # screen resolution
-    screen_width, screen_height = 800, 600
-    image, error = generate_fabric_image(
-        screen_width, screen_height, weaving_pattern, epi, ppi, epi_color, ppi_color)
+    # Increase the size of the unit square for better visibility
+    square_size = 50
 
-    if error:
-        return render_template('index.html', error=error)
+    # size of each segment based on the warp pattern and square size
+    segment_size = square_size // len(weaving_pattern)
 
-    image_path = 'patterns/fabric_pattern.png'
+    # unit square pattern based on the warp pattern
+    unit_square = np.zeros((square_size, square_size, 3), dtype=np.uint8)
+
+    for i, val in enumerate(weaving_pattern):
+        val = int(val)
+        color = epi_color if val == 1 else ppi_color  # useing EPI color for warp threads
+        start_x = i * segment_size
+        end_x = (i + 1) * segment_size
+        unit_square[:, start_x:end_x] = color
+
+    # final warp fabric image by replicating the unit square
+    fabric_width = square_size * epi  #
+    fabric_height = square_size * ppi
+    fabric_image = np.zeros((fabric_height, fabric_width, 3), dtype=np.uint8)
+
+    for i in range(ppi):
+        for j in range(epi):
+            fabric_image[i * square_size: (i + 1) * square_size,
+                         j * square_size: (j + 1) * square_size] = unit_square
+
+    image = Image.fromarray(fabric_image)
+
+    image_path = 'patterns/warp_fabric_pattern.png'
     image.save(image_path)
     return send_file(image_path, mimetype='image/png')
 
 
 if __name__ == '__main__':
     app.run()
+
